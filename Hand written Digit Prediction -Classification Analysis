@@ -1,0 +1,53 @@
+ #Importing necessary libraries
+import numpasets import load_digits
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+# Loading the dataset
+digits = load_digits()
+y as np
+import matplotlib.pyplot as plt
+from sklearn.dat
+# Displaying an example image from the dataset
+plt.gray() 
+plt.matshow(digits.images[0]) 
+plt.show()
+
+# Preparing the data
+X = digits.data  # Features (pixel values)
+y = digits.target  # Labels (digit classes)
+
+# Splitting the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initializing and training the logistic regression model
+model = LogisticRegression(max_iter=10000)  # Using a higher max_iter to ensure convergence
+model.fit(X_train, y_train)
+
+# Making predictions on the test set
+y_pred = model.predict(X_test)
+
+# Evaluating the model
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy: {accuracy * 100:.2f}%")
+
+# Confusion matrix for performance evaluation
+cm = confusion_matrix(y_test, y_pred)
+
+# Displaying the confusion matrix
+plt.figure(figsize=(10, 7))
+plt.matshow(cm, cmap=plt.cm.Blues, fignum=1)
+plt.title('Confusion Matrix', pad=20)
+plt.colorbar()
+plt.xlabel('Predicted')
+plt.ylabel('True')
+plt.show()
+
+# Displaying a few test results
+plt.figure(figsize=(9, 9))
+for index, (image, label) in enumerate(zip(X_test[0:9], y_pred[0:9])):
+    plt.subplot(3, 3, index + 1)
+    plt.imshow(image.reshape(8, 8), cmap=plt.cm.gray)
+    plt.title(f'Predicted: {label}')
+plt.show()
